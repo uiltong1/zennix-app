@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" color="secondary">
-    <q-header style="background-color: #26A69A;">
+    <q-header style="background-color: #26a69a">
       <q-toolbar>
         <q-btn
           flat
@@ -10,31 +10,34 @@
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-   </q-toolbar>
+        <q-space />
+        <q-btn-dropdown auto-close stretch flat :label="nome">
+          <q-list>
+            <q-item clickable @click="tab = 'movies'">
+              <q-item-section>Configurações</q-item-section>
+            </q-item>
+
+            <q-item clickable @click="tab = 'photos'">
+              <q-item-section @click="logout">Sair</q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+      </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
       <q-list>
         <q-item
           header
           class="row justify-center vertical-middle text-h6"
-          style="hover:none;"
+          style="hover: none"
           clickable
           tag="a"
-          href="/#/dashboard"
+          href="/dashboard"
         >
-          Cookbook
+          Zenixx
         </q-item>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
       </q-list>
     </q-drawer>
 
@@ -49,34 +52,73 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
   {
-    title: 'Comidas',
-    icon: 'fastfood',
-    link: '/#/comidas'
+    title: 'Dashboard',
+    icon: '',
+    link: '/dashboard',
+    child: []
   },
   {
-    title: 'Bebidas',
-    icon: 'emoji_food_beverage',
-    link: '/#/bebidas'
+    title: 'Administração',
+    icon: 'admin_panel_settings',
+    link: null,
+    child: [{
+      title: 'Perfis',
+      icon: '',
+      link: '/perfil'
+    },
+    {
+      title: 'Planos',
+      icon: '',
+      link: '/planos'
+    },
+    {
+      title: 'Seguradoras',
+      icon: '',
+      link: '/seguradoras'
+    },
+    {
+      title: 'Status',
+      icon: '',
+      link: '/status'
+    },
+    {
+      title: 'Tipos de planos',
+      icon: '',
+      link: '/tipos_planos'
+    },
+    {
+      title: 'Usuários',
+      icon: '',
+      link: '/users'
+    }
+    ]
   },
   {
-    title: 'Sobremesas',
-    icon: 'free_breakfast',
-    link: '/#/sobremesas'
-  },
-  {
-    title: 'Fitness',
-    icon: 'fitness_center',
-    link: '/#/fitness'
+    title: 'Atendimento',
+    icon: 'admin_panel_settings',
+    link: null,
+    child: [{
+      title: 'Venda',
+      icon: '',
+      link: '/users'
+    }]
   }
 ]
-
+import { signOut } from 'src/security/auth'
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData
+      essentialLinks: linksData,
+      nome: sessionStorage.getItem('nome')
+    }
+  },
+  methods: {
+    logout () {
+      signOut()
+      this.$router.push({ path: '/' })
     }
   }
 }
