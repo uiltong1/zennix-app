@@ -1,6 +1,6 @@
-# app (app)
+# ZennixApp
 
-A Quasar Framework app
+Sistema destinado para corretoras, com o intuito de gerenciar vendas e o fluxo financeiro.
 
 ## Install the dependencies
 ```bash
