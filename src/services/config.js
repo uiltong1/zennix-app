@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const http = axios.create({
-  baseURL: 'http://localhost:8000/api/'
+  baseURL: 'https://zennix-api.herokuapp.com/api/'
 })
 
 http.interceptors.request.use(async (config) => {
